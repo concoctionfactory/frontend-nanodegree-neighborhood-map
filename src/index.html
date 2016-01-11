@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<title>NeighborHood Map</title>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+		<link rel="stylesheet" type="text/css" href="css/style.css">
+	</head>
+
+
+	<body>
+
+
+		<div class="container-fluid">
+
+			<div class="row ">
+				<div class= "col-xs-12 col-md-3">
+					<div class="page-header text-center">
+						<h1 >Canal St </h1>
+						<p class="text-uppercase">Food and Drinks</p>
+					</div>
+
+
+					<form >
+						<div class="form-group">
+								<input  data-bind="textInput: filter" class="form-control" placeholder="Place Search" type="text">
+						</div>
+					</form><!--end form-->
+					<div data-bind ="foreach:filterPlaces" class="list-group">
+						<a href="#" data-bind = "text:name, click: $parent.markerInfo" class="list-group-item"></a>
+					</div>
+					<hr>
+
+						<div data-bind="with:currentPlace" class="thumbnail">
+							<img data-bind="attr:{src:image}" class="img-responsive">
+							<div class="caption">
+								<address >
+										<h2 data-bind= "text:name"></h2>
+										<p data-bind ="text:address"></p>
+										<p data-bind ="text:phone"></p>
+								</address>
+							</div>
+						</div>
+
+
+				</div><!--end col-->
+
+				<div class ="col-xs-12 col-md-9 map">
+					<div class="google-map-canvas" id="map-canvas"></div>
+				</div>
+			</div><!--end row-->
+
+		</div><!--end container-->
+
+
+		<script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+		<script src="../node_modules/oauth-signature/dist/oauth-signature.js"></script>
+		<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCHJTKj_CvwSQk7YYoLfEY7JkzxrcUSLzw "></script>
+		<script src="http://ajax.aspnetcdn.com/ajax/knockout/knockout-3.3.0.js"></script>
+		<script src="js/app.js"></script>
+
+	</body>
+</html>
