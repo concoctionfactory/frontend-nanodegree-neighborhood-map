@@ -19,11 +19,15 @@ var yelp = function(){
 		limit: 8
 	};
 
-	var  YELP_KEY_SECRET = "1Ab9HjsAQau_X4x02wncMmD-67w";
+	var YELP_KEY_SECRET = "1Ab9HjsAQau_X4x02wncMmD-67w";
 	var YELP_TOKEN_SECRET="cB4aqsRzJh8nKZRwKyy6FIDT_UQ";
 	var encodedSignature = oauthSignature.generate('GET',yelp_url, parameters, YELP_KEY_SECRET, YELP_TOKEN_SECRET);
 
 	parameters.oauth_signature = encodedSignature;
+
+	var yelpRequestTimeout = setTimeout(function(){
+		alert("yelp data was not successful");
+	},8000);
 
 	var settings = {
 		url: yelp_url,
@@ -35,9 +39,7 @@ var yelp = function(){
 			var initialPlaces =results.businesses;
 			vm = new viewModel(initialPlaces);
 			ko.applyBindings(vm);
-		},
-		error: function() {
-			console.log("fail");
+			clearTimeout(yelpRequestTimeout);
 		}
 	};
 
@@ -49,7 +51,7 @@ var yelp = function(){
 new yelp().init();
 
 
-var place= function(data){
+var Place= function(data){
 	this.name = ko.observable(data.name);
 	var address_1 = data.location.address[0] ? data.location.address[0]+" " : "";
 	var address_2 = data.location.address[1] ? data.location.address[1]+" " : "";
@@ -64,8 +66,8 @@ var place= function(data){
 };
 
 
+// stores current search and current select store
 var storage = function(vm){
-	console.log("initialPlaces");
 	if (!localStorage.searchStore) {
 		localStorage.searchStore = ko.toJSON("");
 	}
@@ -80,7 +82,6 @@ var storage = function(vm){
 	};
 	this.currentStr = function(data){
 		if (!data){
-			console.log("test");
 			return JSON.parse(localStorage.currentStore);
 		}
 
@@ -90,6 +91,7 @@ var storage = function(vm){
 			phone: data.phone(),
 			image : data.image()
 		};
+		//ko.toJson(data) gives error
 		localStorage.currentStore = ko.toJSON(tempCurrent);
 	};
 };
@@ -100,15 +102,11 @@ var viewModel = function(initialPlaces){
 
 	self.placeList = ko.observableArray([]);
 	initialPlaces.forEach(function(item){
-		self.placeList.push(new place(item));
+		self.placeList.push(new Place(item));
 	});
 
-	console.log(vmStorage.searchStore());
 	self.filter = ko.observable(vmStorage.searchStore());
-
-	console.log(vmStorage.currentStr());
 	self.currentPlace = ko.observable(vmStorage.currentStr());
-
 
 	self.filterPlaces = ko.computed(function(){
 		//http://www.knockmeout.net/2011/04/utility-functions-in-knockoutjs.html
@@ -122,13 +120,11 @@ var viewModel = function(initialPlaces){
 			var filterList = ko.utils.arrayFilter(self.placeList(), function(item) {
 						return item.name().toLowerCase().indexOf(filter) !== -1;
 			});
-			console.log(filterList);
 			if (filterList.length === 0){
 				vmStorage.searchStore("");
 			}
 			return filterList;
 		}
-
 	});
 	self.setCurrent =function(data){
 		self.currentPlace(data);
@@ -139,12 +135,15 @@ var viewModel = function(initialPlaces){
 	self.markerInfo = function(){
 		self.setCurrent (this);
 	};
-
-	var goo = new googleMaps(self);
-	goo.initMap();
+	if (typeof google !== 'undefined'){
+		var goo = new googleMaps(self);
+		goo.initMap();
+	}
+	else{
+		alert("google map data was not successful");
+	}
 
 };
-
 
 
 
@@ -156,7 +155,6 @@ var googleMaps = function(data){
 	var placeList = data.placeList();
 	var filterPlaces = data.filterPlaces();
 
-	console.log(placeList);
 	self.initMap =function(){
 		gMap = new google.maps.Map(document.getElementById('map-canvas'), {
 			zoom: 12,
@@ -211,6 +209,7 @@ var googleMaps = function(data){
 			map: show ? gMap :null,
 			position: place.geometry.location,
 			animation: google.maps.Animation.DROP
+
 		});
 
 		var contentString = '<div>'+ item.name()+'</div';

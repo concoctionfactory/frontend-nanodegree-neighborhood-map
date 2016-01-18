@@ -1,5 +1,9 @@
 /* all map containers must be full height */
-html, body, .container-fluid, .row, .map {
+html,
+body,
+.container-fluid,
+.row,
+.map {
 	height: 100%
 }
 
