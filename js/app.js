@@ -55,7 +55,7 @@ var Place= function(data){
 	this.name = ko.observable(data.name);
 	var address_1 = data.location.address[0] ? data.location.address[0]+" " : "";
 	var address_2 = data.location.address[1] ? data.location.address[1]+" " : "";
-	var imageUrl = data.image_url.replace("ms","l");
+	var imageUrl = data.image_url.replace("ms","ls");
 
 	this.address = ko.observable(address_1 + address_2 + data.location.city);
 	this.location = ko.observable (data.location);
@@ -135,6 +135,8 @@ var viewModel = function(initialPlaces){
 	self.markerInfo = function(){
 		self.setCurrent (this);
 	};
+
+	//Google Map error handling
 	if (typeof google !== 'undefined'){
 		var goo = new googleMaps(self);
 		goo.initMap();
@@ -142,6 +144,10 @@ var viewModel = function(initialPlaces){
 	else{
 		alert("google map data was not successful");
 	}
+
+	self.hideShowMenu = function(){
+		$(".menu").toggleClass("hidden-xs");
+	};
 
 };
 
@@ -187,7 +193,6 @@ var googleMaps = function(data){
 
 
 	self.geocodeAddress= function (geocoder, llbound ) {
-		var show =null;
 		placeList.forEach(function(item){
 			geocoder.geocode({'address': item.address()}, function(results, status) {
 				if (status === google.maps.GeocoderStatus.OK) {
