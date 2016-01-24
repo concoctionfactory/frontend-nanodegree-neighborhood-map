@@ -4,14 +4,14 @@ body,
 .container-fluid,
 .row,
 .map {
-	height: 100%
+	height: 100%;
 }
 
 body{
 	margin-top: 20px;
 }
 
-#map-canvas {
+.google-map-canvas {
 	width:100%;
 	height: 100%;
 	height:calc(100% - 0px);
@@ -20,3 +20,57 @@ body{
 h1{
 	font-size: 50px;
 }
+
+
+
+
+@media only screen and (max-width: 768px){
+	.map{
+
+		height: 70%;
+		height:calc(70% - 0px);
+	}
+
+	.vertical-align {
+		display: flex;
+		align-items: center;
+	}
+
+	.caption,
+	.caption address,
+	.caption h2,
+	.caption p{
+		margin: 0px;
+		padding: 0px;
+	}
+
+
+	body{
+		margin-top: 0px;
+	}
+
+	.glyphicon{
+		font-size: 20px;
+	}
+
+	.page-header h1{
+		font-size: 30px;
+	}
+
+	.page-header,
+	.page-header h1,
+	.page-header p{
+		margin: 0px;
+	}
+
+	.page-header{
+		padding-top: 9px;
+	}
+	.thumbnail{
+		margin-top: 20px;
+	}
+	address h2{
+		font-size: small;
+	}
+}
+
