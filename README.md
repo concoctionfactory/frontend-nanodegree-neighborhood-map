@@ -16,6 +16,6 @@ By clicking on a marker on the map or clicking on a location on the list, more i
 
 
 ## Notes
-run npm install to install dependencies
-project uses grunt
-run grunt to rebuild dist folder
+- run npm install to install dependencies
+- project uses grunt
+- run grunt to rebuild dist folder
