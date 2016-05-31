@@ -1,20 +1,31 @@
 html,
-body,
-.container-fluid,
-.row,
-.map {
+body{
 	height: 100%;
 }
 
-.map{
+body{
+	min-width: 350px;
+}
+
+
+.main {
+	height: 100%;
+	display: flex;
+	flex-direction: row;
+}
+
+.info{
+	max-width: 260px;
+	display: flex;
+	flex-direction: column;
 	padding: 15px;
-}
-.row{
-	padding: :0;
-	margin: 0;
-}
-.container-fluid{
 	padding-right: 0;
+}
+
+.map{
+	/*height: 100%;*/
+	padding: 15px;
+	flex:1;
 }
 
 
@@ -31,23 +42,33 @@ h1{
 	padding: 0;
 }
 
-.row{
-	margin: 0;
+hr{
+	width:100%;
 }
 
-body{
-	min-width: 350px;
-}
+
+
 
 /* md*/
 
 @media only screen and (max-width: 992px){
-	.container-fluid{
-		padding-left: 0;
+
+	.info{
+		max-width: none;
+		padding: 15px;
+		padding-bottom: 0;
 	}
-		.map{
+
+	.map{
 		flex:1;
 	}
+
+
+	.thumbnail{
+		margin-bottom: 0;
+	}
+
+
 
 	.vertical-align {
 		display: flex;
@@ -98,6 +119,8 @@ body{
 	.menu-icon{
 		padding-left: 0;
 	}
+
+
 }
 
 

@@ -12,12 +12,12 @@
 
 
 	<body>
-		<div class="container-fluid">
-			<div class="row main">
+
+			<div class="main">
 
 
-				<div class= "col-xs-12 col-md-3 info">
-					<div class="row vertical-align">
+				<div class= "info">
+					<div class="header">
 						<div class= "col-xs-3 hidden-sm hidden-md hidden-lg menu-icon">
 							<button type="button" class= "glyphicon glyphicon-menu-hamburger btn btn-default" data-bind= "click: hideShowMenu"></button>
 						</div>
@@ -26,6 +26,8 @@
 							<p class="text-uppercase hidden-xs">Food and Drinks</p>
 						</div>
 					</div>
+					<hr>
+
 					<div class="menu hidden-xs">
 						<form >
 							<div class="form-group">
@@ -37,7 +39,7 @@
 						</div>
 						<hr>
 					</div>
-					<div data-bind="with:currentPlace" class="thumbnail row vertical-align">
+					<div data-bind="with:currentPlace" class="thumbnail  vertical-align">
 						<div class="col-xs-3 col-md-12 image">
 							<img data-bind="attr:{src:image}" class="img-responsive ">
 						</div>
@@ -52,13 +54,12 @@
 				</div><!--end col-->
 
 
-				<div class ="col-xs-12 col-md-9 map">
+				<div class ="map">
 					<div class="google-map-canvas" id="map-canvas"></div>
 				</div>
 
-			</div><!--end row-->
+			</div><!--end main-->
 
-		</div><!--end container-->
 
 
 		<script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
