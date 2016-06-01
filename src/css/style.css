@@ -1,12 +1,8 @@
 html,
 body{
 	height: 100%;
-}
-
-body{
 	min-width: 350px;
 }
-
 
 .main {
 	height: 100%;
@@ -22,28 +18,27 @@ body{
 	padding-right: 0;
 }
 
+.info hr{
+	width:100%;
+}
+
+.header h1{
+	font-size: 50px;
+}
+
+.thumbnail .image{
+	padding: 0;
+}
+
 .map{
 	/*height: 100%;*/
 	padding: 15px;
 	flex:1;
 }
 
-
-.google-map-canvas {
+.map .google-map-canvas {
 	width:100%;
 	height: 100%;
-}
-
-h1{
-	font-size: 50px;
-}
-
-.image{
-	padding: 0;
-}
-
-hr{
-	width:100%;
 }
 
 
@@ -53,73 +48,75 @@ hr{
 
 @media only screen and (max-width: 992px){
 
+	.main{
+		display: flex;
+		flex-direction: column;
+	}
+
 	.info{
 		max-width: none;
 		padding: 15px;
 		padding-bottom: 0;
 	}
 
-	.map{
-		flex:1;
+	.header{
+		position: relative;
+	}
+	.header .menu-icon{
+		padding: 0;
+		position: absolute;
+		top: 2px;
 	}
 
 
-	.thumbnail{
-		margin-bottom: 0;
-	}
 
-
-
-	.vertical-align {
-		display: flex;
-		align-items: center;
-	}
-
-	.caption,
-	.caption address,
-	.caption h2,
-	.caption p{
+	.header h1{
+		font-size: 36px;
 		margin: 0px;
 		padding: 0px;
 	}
 
-
-	.glyphicon{
-		font-size: 20px;
-	}
-
-	.page-header h1{
-		font-size: 30px;
-	}
-
-	.page-header,
-	.page-header h1,
-	.page-header p{
+	.header p{
 		margin: 0px;
 	}
 
-	.page-header{
-		padding-top: 9px;
-	}
 	.thumbnail{
-		margin-top: 20px;
-	}
-	address h2{
-		font-size: small;
-	}
-
-	.main{
+		margin-bottom: 0;
 		display: flex;
-		flex-direction: column;
-	}
-	.info{
-		padding-top: 15px;
+		flex- direction: row;
+		align-items: center;
 	}
 
-	.menu-icon{
-		padding-left: 0;
+	.thumbnail .image{
+		flex:1;
+		max-width: 150px;
 	}
 
+	.thumbnail .caption{
+		flex:2;
+		/*padding: 15px;*/
+		margin: 0;
+		display: flex;
+		justify-content: center;
+		max-width: 300px;
+	}
+
+
+	.thumbnail .caption address,
+	.thumbnail .caption h2,
+	.thumbnail .caption p{
+		margin: 0px;
+		padding: 0px;
+	}
+
+	.thumbnail .caption address h2{
+		font-size: large;
+	}
+
+
+	.map{
+		flex:1;
+	}
 
 }
 
