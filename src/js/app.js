@@ -134,6 +134,8 @@ var viewModel = function(initialPlaces){
 
 	self.markerInfo = function(){
 		self.setCurrent (this);
+		self.hideShowMenu();
+
 	};
 
 	//Google Map error handling
