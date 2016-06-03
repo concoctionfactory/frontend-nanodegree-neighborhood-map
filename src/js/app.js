@@ -154,7 +154,9 @@ var viewModel = function(initialPlaces){
 };
 
 
-
+//Drink by Creative Stall from the Noun Project
+//Noodles by Lemon Liu from the Noun Project
+//Sandwich by Alex Chocron from the Noun Project
 
 
 var googleMaps = function(data){
@@ -212,10 +214,20 @@ var googleMaps = function(data){
 
 
 	self.createMarker= function (place,item,show){
+		var sizeX, sizeY =50;
+		var icon ={
+			url:'../images/noun_54275_cc.svg',
+			size: new google.maps.Size(sizeX,sizeY),
+			origin: new google.maps.Point(0,0),
+			anchor: new google.maps.Point(sizeX/2, sizeY/2)
+		};
+		var svg ='./images/noun_179679_cc_1.png';
+
 		var marker = new google.maps.Marker({
 			map: show ? gMap :null,
 			position: place.geometry.location,
-			animation: google.maps.Animation.DROP
+			animation: google.maps.Animation.DROP,
+			icon: svg
 
 		});
 
