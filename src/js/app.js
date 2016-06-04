@@ -16,7 +16,7 @@ var yelp = function(){
 		callback: 'cb',              // This is crucial to include for jsonp implementation in AJAX or else the oauth-signature will be wrong.
 		location: 'Canal Street New York',
 		term: 'food drink',
-		limit: 8
+		limit: 12
 	};
 
 	var YELP_KEY_SECRET = "1Ab9HjsAQau_X4x02wncMmD-67w";

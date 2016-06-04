@@ -26,6 +26,15 @@ body{
 	font-size: 50px;
 }
 
+menu{
+	padding: 0;
+}
+
+menu .list-group{
+	overflow-y: auto;
+	height:25vh;
+}
+
 .thumbnail .image{
 	padding: 0;
 }

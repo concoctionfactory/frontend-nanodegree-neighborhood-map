@@ -13,22 +13,22 @@
 
 	<body>
 
-			<div class="main">
+			<main class="main">
 
 
-				<div class= "info">
-					<div class="header">
-						<div class= "hidden-sm hidden-md hidden-lg menu-icon">
+				<section class= "info">
+					<header class="header">
+						<nav class= "hidden-sm hidden-md hidden-lg menu-icon">
 							<button type="button" class= "glyphicon glyphicon-menu-hamburger btn btn-default" data-bind= "click: hideShowMenu"></button>
-						</div>
+						</nav>
 						<div class="text-center ">
 							<h1 >Canal St </h1>
 							<p class="text-uppercase hidden-xs">Food and Drinks</p>
 						</div>
-					</div>
+					</header>
 					<hr>
 
-					<div class="menu hidden-xs">
+					<menu class="menu hidden-xs">
 						<form >
 							<div class="form-group">
 									<input  data-bind="textInput: filter" class="form-control" placeholder="Place Search" type="text">
@@ -38,7 +38,7 @@
 							<a href="#" data-bind = "text:name, click: $parent.markerInfo" class="list-group-item"></a>
 						</div>
 						<hr>
-					</div>
+					</menu>
 					<div data-bind="with:currentPlace" class="thumbnail  vertical-align">
 						<div class="image">
 							<img data-bind="attr:{src:image}" class="img-responsive ">
@@ -51,14 +51,14 @@
 							</address>
 						</div>
 					</div>
-				</div><!--end col-->
+				</section><!--end col-->
 
 
-				<div class ="map">
+				<map class ="map">
 					<div class="google-map-canvas" id="map-canvas"></div>
-				</div>
+				</map>
 
-			</div><!--end main-->
+			</main><!--end main-->
 
 
 
