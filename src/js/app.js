@@ -16,7 +16,7 @@ var yelp = function(){
 		callback: 'cb',              // This is crucial to include for jsonp implementation in AJAX or else the oauth-signature will be wrong.
 		location: 'Canal Street New York',
 		term: 'food drink',
-		limit: 12
+		limit: 10
 	};
 
 	var YELP_KEY_SECRET = "1Ab9HjsAQau_X4x02wncMmD-67w";
@@ -169,6 +169,40 @@ var googleMaps = function(data){
 		gMap = new google.maps.Map(document.getElementById('map-canvas'), {
 			zoom: 12,
 		});
+
+		gMap.set('styles',[
+			{
+				"elementType": "labels.text",
+				"stylers": [
+					{ "visibility": "off" },
+				],
+				"elementType": "labels.icon",
+				"stylers": [
+					{ "visibility": "off" },
+				],
+			},
+			{
+				"featureType": "transit.station",
+				"elementType": "labels.icon",
+				"stylers": [
+					{"visibility": "on" }
+				]
+			},
+			{
+				featureType: 'poi',
+				elementType: 'geometry',
+				stylers: [
+					{ visibility: 'off' }
+				]
+			},
+			{
+				"featureType": "landscape.man_made",
+
+				"stylers": [
+					{ "visibility": "off" }
+				]
+			  }
+		]);
 		var geocoder = new google.maps.Geocoder();
 		var latlngbounds = new google.maps.LatLngBounds();
 		self.geocodeAddress(geocoder, latlngbounds);
