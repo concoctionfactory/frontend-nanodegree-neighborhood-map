@@ -15,7 +15,7 @@ var yelp = function(){
 		oauth_version : '1.0',
 		callback: 'cb',              // This is crucial to include for jsonp implementation in AJAX or else the oauth-signature will be wrong.
 		location: 'Canal Street New York',
-		term: 'food drink',
+		term: 'food drink bar',
 		limit: 10
 	};
 
@@ -52,17 +52,43 @@ new yelp().init();
 
 
 var Place= function(data){
+	console.log(data);
 	this.name = ko.observable(data.name);
 	var address_1 = data.location.address[0] ? data.location.address[0]+" " : "";
 	var address_2 = data.location.address[1] ? data.location.address[1]+" " : "";
 	var imageUrl = data.image_url.replace("ms","ls");
+	var isBar = $.inArray("bar",data.categories);
 
+
+	/**
+ * @description determine if an array contains one or more items from another array.
+ * @param {array} haystack the array to search.
+ * @param {array} arr the array providing items to check for in the haystack.
+ * @return {boolean} true|false if haystack contains at least one item from arr.
+ */
+var findOne = function (haystack, arr) {
+    return arr.some(function (v) {
+         for (hay in haystack){
+         	console.log(haystack[hay]);
+        	if ( haystack[hay].indexOf(v) >= 0){
+        		return haystack[hay].indexOf(v) >= 0;
+        	}
+        }
+    });
+};
+
+/*var test= ["a","b","c",["abc","derf"]];
+	for (te in test){
+		console.log(test[te]);
+	}*/
+	//console.log(data.categories,[["bars"],"Bars"]);
+	console.log(findOne(data.categories, ["bars"]));
 	this.address = ko.observable(address_1 + address_2 + data.location.city);
 	this.location = ko.observable (data.location);
 	this.image= ko.observable(imageUrl);
 	this.maker =null;
 	this.infowindow =null;
-	this.phone = ko.observable(data.phone);
+	this.phone = ko.observable(data.display_phone);
 };
 
 
