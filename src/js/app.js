@@ -57,7 +57,7 @@ var Place= function(data){
 	var address_1 = data.location.address[0] ? data.location.address[0]+" " : "";
 	var address_2 = data.location.address[1] ? data.location.address[1]+" " : "";
 	var imageUrl = data.image_url.replace("ms","ls");
-	var isBar = $.inArray("bar",data.categories);
+	//var isBar = $.inArray("bar",data.categories);
 
 
 	/**
@@ -83,6 +83,8 @@ var findOne = function (haystack, arr) {
 	}*/
 	//console.log(data.categories,[["bars"],"Bars"]);
 	console.log(findOne(data.categories, ["bars"]));
+	//var isBar = findOne(data.categories, ["bars"]);
+	this.isBar = ko.observable(findOne(data.categories, ["bars"]));
 	this.address = ko.observable(address_1 + address_2 + data.location.city);
 	this.location = ko.observable (data.location);
 	this.image= ko.observable(imageUrl);
@@ -274,20 +276,23 @@ var googleMaps = function(data){
 
 
 	self.createMarker= function (place,item,show){
+		console.log(item.isBar());
 		var sizeX, sizeY =50;
-		var icon ={
+/*		var icon ={
 			url:'../images/noun_54275_cc.svg',
 			size: new google.maps.Size(sizeX,sizeY),
 			origin: new google.maps.Point(0,0),
 			anchor: new google.maps.Point(sizeX/2, sizeY/2)
-		};
-		var svg ='./images/noun_179679_cc_1.png';
+		};*/
+		var imgDrink ='./images/noun_179679_cc_1.png';
+		var imgFood ='./images/noun_82812_cc.png'
+		var icon = item.isBar() ? imgDrink: imgFood;
 
 		var marker = new google.maps.Marker({
 			map: show ? gMap :null,
 			position: place.geometry.location,
 			animation: google.maps.Animation.DROP,
-			icon: svg
+			icon: icon
 
 		});
 
