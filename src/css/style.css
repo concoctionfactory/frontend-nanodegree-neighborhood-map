@@ -11,7 +11,7 @@ body{
 }
 
 .info{
-	max-width: 260px;
+	width: 240px;
 	display: flex;
 	flex-direction: column;
 	padding: 15px;
@@ -28,15 +28,25 @@ body{
 
 menu{
 	padding: 0;
+	display: flex;
+	flex-direction: column;
+	min-height: 200px;
 }
 
 menu .list-group{
 	overflow-y: auto;
-	height:25vh;
 }
 
+.thumbnail{
+	margin: 0;
+}
 .thumbnail .image{
 	padding: 0;
+}
+
+
+.thumbnail .caption p{
+	margin: 0px;
 }
 
 .map{
@@ -48,6 +58,11 @@ menu .list-group{
 .map .google-map-canvas {
 	width:100%;
 	height: 100%;
+}
+
+hr{
+	margin-top: 10px;
+	margin-bottom: 10px;
 }
 
 
@@ -63,7 +78,7 @@ menu .list-group{
 	}
 
 	.info{
-		max-width: none;
+		width: 100%;
 		padding: 15px;
 		padding-bottom: 0;
 	}
@@ -130,3 +145,9 @@ menu .list-group{
 }
 
 
+@media only screen and (min-width: 992px) and (max-height: : 750px) {
+	.thumbnail{
+		display: none;
+	}
+
+}
