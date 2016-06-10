@@ -28,31 +28,34 @@
 					</header>
 					<hr>
 
-					<menu class="menu hidden-xs">
-						<form >
-							<div class="form-group">
-									<input  data-bind="textInput: filter" class="form-control" placeholder="Place Search" type="text">
+					<div class="menu-thumb-wrapper">
+						<menu class="menu hidden-xs">
+							<form >
+								<div class="form-group">
+										<input  data-bind="textInput: filter" class="form-control" placeholder="Place Search" type="text">
+								</div>
+							</form><!--end form-->
+							<div data-bind ="foreach:filterPlaces" class="list-group">
+								<a href="#" data-bind = "text:name, click: $parent.markerInfo" class="list-group-item"></a>
 							</div>
-						</form><!--end form-->
-						<div data-bind ="foreach:filterPlaces" class="list-group">
-							<a href="#" data-bind = "text:name, click: $parent.markerInfo" class="list-group-item"></a>
-						</div>
-						<hr>
-					</menu>
-					<section>
-						<div data-bind="with:currentPlace" class="thumbnail  vertical-align">
-							<div class="image">
-								<img data-bind="attr:{src:image}" class="img-responsive ">
+							<hr>
+						</menu>
+						<section class="thumbnail-section">
+							<div data-bind="with:currentPlace" class="thumbnail  vertical-align">
+								<div class="image">
+									<img data-bind="attr:{src:image}" class="img-responsive ">
+								</div>
+								<div class="caption">
+									<address >
+											<h2 data-bind= "text:name"></h2>
+											<p data-bind ="text:address"></p>
+											<p data-bind ="text:phone"></p>
+									</address>
+								</div>
 							</div>
-							<div class="caption">
-								<address >
-										<h2 data-bind= "text:name"></h2>
-										<p data-bind ="text:address"></p>
-										<p data-bind ="text:phone"></p>
-								</address>
-							</div>
-						</div>
-					</section>
+						</section>
+					</div>
+
 				</section><!--end col-->
 
 
