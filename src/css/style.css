@@ -26,6 +26,12 @@ body{
 	font-size: 50px;
 }
 
+
+	.menu-thumb-wrapper{
+		    display: flex;
+    flex-direction: column;
+
+	}
 menu{
 	padding: 0;
 	display: flex;
@@ -157,25 +163,40 @@ hr{
 	.menu-thumb-wrapper{
 		display: flex;
 		max-height: 250px;
+		flex-direction: row;
 	}
 
 	.thumbnail-section{
-		width: 100%;
-		height: 100%;
+/*		width: 100%;
+		height: 100%;*/
 		margin-left: 15px;
+		    display: flex;
+		        flex: 2;
+
 	}
 
 	.thumbnail .image{
 		max-width: none;
+		flex:none;
 	}
 
 	.menu hr{
 		display: none;
 	}
 
+		.menu .list-group{
+		border-bottom: 1px solid #ddd;
+    margin-bottom: 0px;
+	}
+
 	.menu{
 		margin:0;
-		width: 50%;
+	/*	width: 50%;*/
+	    min-width: 300px;
+	}
+
+	.thumbnail{
+		    width: 100%;;
 	}
 
 
