@@ -11,7 +11,7 @@ body{
 }
 
 .info{
-	width: 240px;
+	width: 300px;
 	display: flex;
 	flex-direction: column;
 	padding: 15px;
@@ -27,11 +27,11 @@ body{
 }
 
 
-	.menu-thumb-wrapper{
-		    display: flex;
-    flex-direction: column;
+.menu-thumb-wrapper{
+	display: flex;
+	flex-direction: column;
+}
 
-	}
 menu{
 	padding: 0;
 	display: flex;
@@ -41,6 +41,13 @@ menu{
 
 menu .list-group{
 	overflow-y: auto;
+}
+
+.meunu{
+	display:block;
+}
+.menu-icon-hidden{
+	display: none;
 }
 
 .thumbnail{
@@ -74,6 +81,7 @@ hr{
 
 
 
+
 /* md*/
 
 @media only screen and (max-width: 992px){
@@ -81,8 +89,13 @@ hr{
 	.main{
 		display: flex;
 		flex-direction: column;
+		min-height: 450px;
+
 	}
 
+	.menu-icon-hidden{
+		display:block;
+	}
 	.info{
 		width: 100%;
 		padding: 15px;
@@ -151,15 +164,18 @@ hr{
 }
 /**/
 
-@media only screen  and (min-width: 992px) and (max-height: 750px) {
+/*@media only screen  and (min-width: 992px) and (max-height: 750px) {
 	.thumbnail .image{
 		display: none;
 	}
 
-}
+}*/
 
 
 @media only screen  and (min-width: 768px) and (max-width: 992px) {
+	.main{
+		min-height: 540px;
+	}
 	.menu-thumb-wrapper{
 		display: flex;
 		max-height: 250px;
@@ -199,5 +215,42 @@ hr{
 		    width: 100%;;
 	}
 
+}
+
+
+@media only screen  and (max-height: 750px) {
+		.menu-icon-hidden{
+		display:block;
+	}
+
+	.header .text p{
+		display: none;
+	}
+
+
+	.header h1{
+		font-size: 36px;
+		margin: 0px;
+		padding: 0px;
+	}
+
+	.header p{
+		margin: 0px;
+	}
+	.header{
+		position: relative;
+	}
+	.header .menu-icon{
+		padding: 0;
+		position: absolute;
+		top: 2px;
+	}
 
 }
+
+@media only screen  and (min-height: 750px) {
+		.menu{
+		display:flex !important;
+	}
+
+	}

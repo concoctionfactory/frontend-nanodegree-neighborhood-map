@@ -176,7 +176,7 @@ var viewModel = function(initialPlaces){
 	}
 
 	self.hideShowMenu = function(){
-		$(".menu").toggleClass("hidden-xs");
+		$(".menu").toggle();
 	};
 
 };
