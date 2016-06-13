@@ -46,8 +46,8 @@ menu .list-group{
 .meunu{
 	display:block;
 }
-.menu-icon-hidden{
-	display: none;
+.hidden{
+	display: none !important;
 }
 
 .thumbnail{
@@ -183,12 +183,8 @@ hr{
 	}
 
 	.thumbnail-section{
-/*		width: 100%;
-		height: 100%;*/
-		margin-left: 15px;
-		    display: flex;
-		        flex: 2;
-
+		display: flex;
+		flex: 2;
 	}
 
 	.thumbnail .image{
@@ -200,26 +196,26 @@ hr{
 		display: none;
 	}
 
-		.menu .list-group{
+	.menu .list-group{
 		border-bottom: 1px solid #ddd;
-    margin-bottom: 0px;
+		margin-bottom: 0px;
 	}
 
 	.menu{
 		margin:0;
-	/*	width: 50%;*/
-	    min-width: 300px;
+		min-width: 300px;
+		margin-right: 15px;
 	}
 
 	.thumbnail{
-		    width: 100%;;
+		width: 100%;;
 	}
 
 }
 
 
 @media only screen  and (max-height: 750px) {
-		.menu-icon-hidden{
+	.menu-icon-hidden{
 		display:block;
 	}
 
@@ -245,12 +241,24 @@ hr{
 		position: absolute;
 		top: 2px;
 	}
+	.menu{
+		display: none ;
+	}
 
 }
 
 @media only screen  and (min-height: 750px) {
-		.menu{
-		display:flex !important;
+	.menu{
+		display:flex ;
 	}
 
+	.menu-icon-hidden{
+		display:none;
 	}
+}
+
+@media only screen  and (max-width: 768px) {
+	.menu{
+		display:flex ;
+	}
+}

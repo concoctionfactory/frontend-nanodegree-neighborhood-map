@@ -176,7 +176,12 @@ var viewModel = function(initialPlaces){
 	}
 
 	self.hideShowMenu = function(){
-		$(".menu").toggle();
+		//$(".menu").toggleClass("hidden");
+		$(".menu").toggle(
+
+			// function(){$(".menu").css({"display": "flex"});},
+			// function(){$(".menu").css({"display": "none"});}
+			);
 	};
 
 };
