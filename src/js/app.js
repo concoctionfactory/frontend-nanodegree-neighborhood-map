@@ -15,7 +15,7 @@ var yelp = function(){
 		oauth_version : '1.0',
 		callback: 'cb',              // This is crucial to include for jsonp implementation in AJAX or else the oauth-signature will be wrong.
 		location: 'Canal Street New York',
-		term: 'food drink bar',
+		term: 'noodle tea ',
 		limit: 10
 	};
 
@@ -57,9 +57,6 @@ var Place= function(data){
 	var address_1 = data.location.address[0] ? data.location.address[0]+" " : "";
 	var address_2 = data.location.address[1] ? data.location.address[1]+" " : "";
 	var imageUrl = data.image_url.replace("ms","ls");
-	//var isBar = $.inArray("bar",data.categories);
-
-
 	/**
  * @description determine if an array contains one or more items from another array.
  * @param {array} haystack the array to search.
@@ -67,24 +64,18 @@ var Place= function(data){
  * @return {boolean} true|false if haystack contains at least one item from arr.
  */
 var findOne = function (haystack, arr) {
-    return arr.some(function (v) {
-         for (hay in haystack){
-         	console.log(haystack[hay]);
-        	if ( haystack[hay].indexOf(v) >= 0){
-        		return haystack[hay].indexOf(v) >= 0;
-        	}
-        }
-    });
+	return arr.some(function (v) {
+		 for (hay in haystack){
+			console.log(haystack[hay]);
+			if ( haystack[hay].indexOf(v) >= 0){
+				return haystack[hay].indexOf(v) >= 0;
+			}
+		}
+	});
 };
 
-/*var test= ["a","b","c",["abc","derf"]];
-	for (te in test){
-		console.log(test[te]);
-	}*/
-	//console.log(data.categories,[["bars"],"Bars"]);
 	console.log(findOne(data.categories, ["bars"]));
-	//var isBar = findOne(data.categories, ["bars"]);
-	this.isBar = ko.observable(findOne(data.categories, ["bars"]));
+	this.isBar = ko.observable(findOne(data.categories, ["tea"]));
 	this.address = ko.observable(address_1 + address_2 + data.location.city);
 	this.location = ko.observable (data.location);
 	this.image= ko.observable(imageUrl);
@@ -176,12 +167,7 @@ var viewModel = function(initialPlaces){
 	}
 
 	self.hideShowMenu = function(){
-		//$(".menu").toggleClass("hidden");
-		$(".menu").toggle(
-
-			// function(){$(".menu").css({"display": "flex"});},
-			// function(){$(".menu").css({"display": "none"});}
-			);
+		$(".menu").toggleClass("menu-hidden");
 	};
 
 };
@@ -190,6 +176,8 @@ var viewModel = function(initialPlaces){
 //Drink by Creative Stall from the Noun Project
 //Noodles by Lemon Liu from the Noun Project
 //Sandwich by Alex Chocron from the Noun Project
+//Teapot by Lilit Kalachyan from the Noun Project
+
 
 
 var googleMaps = function(data){
@@ -205,37 +193,73 @@ var googleMaps = function(data){
 
 		gMap.set('styles',[
 			{
-				"elementType": "labels.text",
-				"stylers": [
-					{ "visibility": "off" },
-				],
-				"elementType": "labels.icon",
-				"stylers": [
-					{ "visibility": "off" },
-				],
-			},
-			{
-				"featureType": "transit.station",
-				"elementType": "labels.icon",
-				"stylers": [
-					{"visibility": "on" }
-				]
-			},
-			{
-				featureType: 'poi',
-				elementType: 'geometry',
+				featureType: "road.highway",
+				elementType: "geometry",
 				stylers: [
-					{ visibility: 'off' }
+					{saturation: -100 },
+					{lightness: 80 },
+					//{gamma: 2 }
 				]
-			},
-			{
-				"featureType": "landscape.man_made",
+			},{
+				featureType: "road.arterial",
+				elementType: "geometry",
+				stylers: [
+					{saturation: -100 },
+					//{gamma: 1 },
+					{lightness: 0 }
+				]
+			},{
+			featureType: "road.local",
+				elementType: "labels",
+				stylers: [
+					{visibility: 'on' }
+				]
+			},{
+				featureType: "poi",
+				elementType: "all",
+				stylers: [
+					{saturation: -100 },
+					{visibility: 'off' },
+					//{lightness: 54 }
 
-				"stylers": [
-					{ "visibility": "off" }
 				]
-			  }
+			},{
+				featureType: "administrative",
+				stylers: [
+					{saturation: -100 },
+					{visibility: 'off' }
+				]
+			},{
+				featureType: "transit",
+				stylers: [
+					{saturation: -100 },
+					{ visibility: 'simplified' }
+				]
+			},{
+				featureType: "water",
+				elementType: "geometry",
+				stylers: [
+					{saturation: -100 },
+					{lightness: 25 },
+					{ visibility: 'simplified' }
+				]
+			},{
+				featureType: "road",
+				stylers: [
+					{saturation: -100 },
+					{lightness: -15 },
+					{ visibility: 'simplified' }
+				]
+			},{
+				featureType: "landscape",
+				stylers: [
+					{saturation: -100 },
+					{lightness: 70 },
+					{ visibility: 'simplified' }
+				]
+			}
 		]);
+
 		var geocoder = new google.maps.Geocoder();
 		var latlngbounds = new google.maps.LatLngBounds();
 		self.geocodeAddress(geocoder, latlngbounds);
@@ -289,7 +313,7 @@ var googleMaps = function(data){
 			origin: new google.maps.Point(0,0),
 			anchor: new google.maps.Point(sizeX/2, sizeY/2)
 		};*/
-		var imgDrink ='./images/noun_179679_cc_1.png';
+		var imgDrink ='./images/noun_154278_cc_1.png';
 		var imgFood ='./images/noun_82812_cc.png'
 		var icon = item.isBar() ? imgDrink: imgFood;
 

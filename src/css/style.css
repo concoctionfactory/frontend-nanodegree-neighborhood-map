@@ -11,7 +11,7 @@ body{
 }
 
 .info{
-	width: 300px;
+	width: 250px;
 	display: flex;
 	flex-direction: column;
 	padding: 15px;
@@ -43,7 +43,7 @@ menu .list-group{
 	overflow-y: auto;
 }
 
-.meunu{
+.menu-hidden{
 	display:block;
 }
 .hidden{
@@ -55,6 +55,8 @@ menu .list-group{
 }
 .thumbnail .image{
 	padding: 0;
+/*	-webkit-filter: grayscale(100%);  Chrome, Safari, Opera
+	filter: grayscale(100%);*/
 }
 
 
@@ -241,14 +243,14 @@ hr{
 		position: absolute;
 		top: 2px;
 	}
-	.menu{
+	.menu-hidden{
 		display: none ;
 	}
 
 }
 
 @media only screen  and (min-height: 750px) {
-	.menu{
+	.menu-hidden{
 		display:flex ;
 	}
 
@@ -258,7 +260,11 @@ hr{
 }
 
 @media only screen  and (max-width: 768px) {
-	.menu{
-		display:flex ;
+	.menu-hidden{
+		display:none ;
+	}
+
+	.menu-icon-hidden{
+		display:block;
 	}
 }
