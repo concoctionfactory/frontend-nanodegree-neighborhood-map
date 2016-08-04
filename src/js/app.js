@@ -168,6 +168,7 @@ var viewModel = function(initialPlaces){
 
 	self.hideShowMenu = function(){
 		$(".menu").toggleClass("menu-hidden");
+		$(".thumbnail-section").toggleClass("thumbnail-section-hidden");
 	};
 
 };
