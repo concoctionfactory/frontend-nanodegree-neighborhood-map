@@ -39,18 +39,39 @@ module.exports = function(grunt) {
 					dest:'dist/css'
 				}]
 			}
+		},
+
+
+
+	copy:{
+		image:{
+			expand: true,
+			cwd:'src/images',
+			src:'**',
+			dest:'dist/images'
+		},
+		lib:{
+			expand:true,
+			cwd:'src/js/lib',
+			src:'**',
+			dest:'dist/js/lib'
+		},
+		css:{
+			expand:true,
+			cwd:'src/css',
+			src:'**',
+			dest:'dest/css'
 		}
+	}
 
 	});
-
-
-
 
 	grunt.registerTask('default', [
 		'jshint',
 		'concat',
 		'htmlmin',
-		//'cssmin'
+		'cssmin',
+		'copy'
 	]);
 
 };

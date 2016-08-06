@@ -65,7 +65,7 @@ var Place= function(data){
  */
 var findOne = function (haystack, arr) {
 	return arr.some(function (v) {
-		 for (hay in haystack){
+		 for (var hay in haystack){
 			console.log(haystack[hay]);
 			if ( haystack[hay].indexOf(v) >= 0){
 				return haystack[hay].indexOf(v) >= 0;
@@ -315,7 +315,7 @@ var googleMaps = function(data){
 			anchor: new google.maps.Point(sizeX/2, sizeY/2)
 		};*/
 		var imgDrink ='./images/noun_154278_cc_1.png';
-		var imgFood ='./images/noun_82812_cc.png'
+		var imgFood ='./images/noun_82812_cc.png';
 		var icon = item.isBar() ? imgDrink: imgFood;
 
 		var marker = new google.maps.Marker({
