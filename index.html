@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 	<head>
-		<meta charset="UTF-8">
+		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width,initial-scale=1">
 		<title>NeighborHood Map</title>
@@ -13,57 +13,58 @@
 
 	<body>
 
+			<main class="main">
 
-		<div class="container-fluid">
 
-
-			<div class="row">
-				<div class="col-xs-12 col-md-3">
-
-					<div class="row vertical-align">
-						<div class="col-xs-3 hidden-sm hidden-md hidden-lg">
+				<section class="info">
+					<header class="header">
+						<nav class="menu-icon menu-icon-hidden">
 							<button type="button" class="glyphicon glyphicon-menu-hamburger btn btn-default" data-bind="click: hideShowMenu"></button>
-						</div>
-						<div class="page-header text-center col-xs-6 col-md-12">
+						</nav>
+						<div class="text-center text">
 							<h1>Canal St </h1>
 							<p class="text-uppercase hidden-xs">Food and Drinks</p>
 						</div>
-					</div>
+					</header>
+					<hr>
 
-					<div class="menu hidden-xs">
-						<form>
-							<div class="form-group">
-									<input data-bind="textInput: filter" class="form-control" placeholder="Place Search" type="text">
+					<div class="menu-thumb-wrapper">
+						<menu class="menu menu-hidden">
+							<form>
+								<div class="form-group">
+										<input data-bind="textInput: filter" class="form-control" placeholder="Place Search" type="text">
+								</div>
+							</form>
+							<div data-bind="foreach:filterPlaces" class="list-group">
+								<a href="#" data-bind="text:name, click: $parent.markerInfo" class="list-group-item"></a>
 							</div>
-						</form>
-						<div data-bind="foreach:filterPlaces" class="list-group">
-							<a href="#" data-bind="text:name, click: $parent.markerInfo" class="list-group-item"></a>
-						</div>
-						<hr>
+							<hr>
+						</menu>
+						<section class="thumbnail-section">
+							<div data-bind="with:currentPlace" class="thumbnail vertical-align">
+								<div class="image">
+									<img data-bind="attr:{src:image}" class="img-responsive">
+								</div>
+								<div class="caption">
+									<address>
+											<h2 data-bind="text:name"></h2>
+											<p data-bind="text:address"></p>
+											<p data-bind="text:phone"></p>
+									</address>
+								</div>
+							</div>
+						</section>
 					</div>
 
-					<div data-bind="with:currentPlace" class="thumbnail row vertical-align">
-						<div class="col-xs-3 col-md-12">
-							<img data-bind="attr:{src:image}" class="img-responsive">
-						</div>
-						<div class="caption col-xs-9 col-md-12">
-							<address>
-									<h2 data-bind="text:name"></h2>
-									<p data-bind="text:address"></p>
-									<p data-bind="text:phone"></p>
-							</address>
-						</div>
-					</div>
+				</section>
 
 
-				</div>
-
-				<div class="col-xs-12 col-md-9 map">
+				<map class="map">
 					<div class="google-map-canvas" id="map-canvas"></div>
-				</div>
-			</div>
+				</map>
 
-		</div>
+			</main>
+
 
 
 		<script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
