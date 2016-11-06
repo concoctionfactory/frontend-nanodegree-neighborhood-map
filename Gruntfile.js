@@ -74,4 +74,12 @@ module.exports = function(grunt) {
 		'copy'
 	]);
 
+	grunt.registerTask('lib', [
+		'copy:lib',
+	]);
+
+	grunt.registerTask('html',[
+		'htmlmin'
+	]);
+
 };
