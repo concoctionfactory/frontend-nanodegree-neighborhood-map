@@ -192,6 +192,7 @@ var googleMaps = function(data){
 			zoom: 12,
 		});
 
+
 		gMap.set('styles',[
 			{
 				featureType: "road.highway",
@@ -261,10 +262,17 @@ var googleMaps = function(data){
 			}
 		]);
 
+
 		var geocoder = new google.maps.Geocoder();
 		var latlngbounds = new google.maps.LatLngBounds();
 		self.geocodeAddress(geocoder, latlngbounds);
 
+		google.maps.event.addDomListener(window, 'resize', function() {
+			console.log("resize");
+			var center = gMap.getCenter();
+			google.maps.event.trigger(gMap, "resize");
+			gMap.setCenter(center);
+		});
 		data.filterPlaces.subscribe(function (newValue) {
 			placeList.forEach(function(item){
 				self.showMarker(item,self.checkShowMarker(item, newValue));

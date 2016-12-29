@@ -62,7 +62,21 @@ module.exports = function(grunt) {
 			src:'**',
 			dest:'dest/css'
 		}
-	}
+	},
+
+
+	uglify: {
+		options: {
+			compress: {
+				drop_console: true
+			}
+		},
+		my_target: {
+			files: {
+				'dist/js/app.js': ['src/js/app.js']
+			}
+		}
+	},
 
 	});
 
@@ -80,6 +94,11 @@ module.exports = function(grunt) {
 
 	grunt.registerTask('html',[
 		'htmlmin'
+	]);
+
+	grunt.registerTask('js',[
+		'jshint',
+		'uglify'
 	]);
 
 };
