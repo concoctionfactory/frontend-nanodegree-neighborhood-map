@@ -1,2 +1,234 @@
-.thumbnail,.thumbnail .caption p{margin:0}body,html{height:100%;min-width:350px}.main{height:100%;display:flex;flex-direction:row}.info,.menu-thumb-wrapper{flex-direction:column;display:flex}.info{width:250px;padding:15px 0 15px 15px}.thumbnail .image,menu{padding:0}.info hr{width:100%}.header h1{font-size:50px}menu{display:flex;flex-direction:column;min-height:200px}menu .list-group{overflow-y:auto}.menu-hidden{display:block}.hidden{display:none!important}.map{padding:15px;flex:1}.map .google-map-canvas{width:100%;height:100%}hr{margin-top:10px;margin-bottom:10px}@media only screen and (min-width:768px) and (max-height:750px){.menu-icon-hidden{display:block}.header .text p,.menu-hidden,.thumbnail-section-hidden{display:none}.header h1{font-size:36px;margin:0;padding:0}.header p{margin:0}.header{position:relative}.header .menu-icon{padding:0;position:absolute;top:2px}.thumbnail-section{overflow-y:auto}}@media only screen and (min-width:768px) and (min-height:750px){.menu-hidden{display:flex}.menu-icon-hidden{display:none}.thumbnail-section{overflow-y:initial}.thumbnail-section-hidden{display:block}}@media only screen and (max-width:768px){.header h1,.thumbnail .caption address,.thumbnail .caption h2,.thumbnail .caption p{margin:0;padding:0}.main{display:flex;flex-direction:column;min-height:450px}.menu-hidden{display:none}.info,.menu-icon-hidden{display:block}.info{width:100%;padding:15px 15px 0}.header{position:relative}.header .menu-icon{padding:0;position:absolute;top:2px}.header h1{font-size:36px}.header p{margin:0}.thumbnail{margin-bottom:0;display:flex;flex- direction:row;align-items:center}.thumbnail .image{flex:1;max-width:150px}.thumbnail .caption{flex:2;2
-		margin:0;display:flex;justify-content:center;max-width:300px}.thumbnail .caption address h2{font-size:large}.map{flex:1;height:10%}}
+html,
+body{
+	height: 100%;
+	min-width: 350px;
+}
+
+.main {
+	height: 100%;
+	display: flex;
+	flex-direction: row;
+}
+
+.info{
+	width: 250px;
+	display: flex;
+	flex-direction: column;
+	padding: 15px;
+	padding-right: 0;
+}
+
+.info hr{
+	width:100%;
+}
+
+.header h1{
+	font-size: 50px;
+}
+
+
+.menu-thumb-wrapper{
+	display: flex;
+	flex-direction: column;
+}
+
+menu{
+	padding: 0;
+	display: flex;
+	flex-direction: column;
+	min-height: 200px;
+}
+
+menu .list-group{
+	overflow-y: auto;
+}
+
+.menu-hidden{
+	display:block;
+}
+.hidden{
+	display: none !important;
+}
+
+.thumbnail{
+	margin: 0;
+}
+.thumbnail .image{
+	padding: 0;
+/*	-webkit-filter: grayscale(100%);  Chrome, Safari, Opera
+	filter: grayscale(100%);*/
+}
+
+
+.thumbnail .caption p{
+	margin: 0px;
+}
+
+.map{
+	/*height: 100%;*/
+	padding: 15px;
+	flex:1;
+}
+
+.map .google-map-canvas {
+	width:100%;
+	height: 100%;
+}
+
+hr{
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+
+
+
+
+
+/* md*/
+
+
+
+
+@media only screen and (min-width: 768px) and (max-height: 750px) {
+	.menu-icon-hidden{
+		display:block;
+	}
+
+	.header .text p{
+		display: none;
+	}
+
+
+	.header h1{
+		font-size: 36px;
+		margin: 0px;
+		padding: 0px;
+	}
+
+	.header p{
+		margin: 0px;
+	}
+	.header{
+		position: relative;
+	}
+	.header .menu-icon{
+		padding: 0;
+		position: absolute;
+		top: 2px;
+	}
+	.menu-hidden{
+		display: none ;
+	}
+
+	.thumbnail-section{
+		overflow-y: auto;
+	}
+
+	.thumbnail-section-hidden{
+		display: none;
+	}
+
+}
+
+@media only screen and (min-width: 768px) and (min-height: 750px) {
+	.menu-hidden{
+		display:flex ;
+	}
+
+	.menu-icon-hidden{
+		display:none;
+	}
+	.thumbnail-section{
+	overflow-y: initial;
+	}
+	.thumbnail-section-hidden{
+		display: block;
+	}
+
+}
+
+
+
+@media only screen and (max-width: 768px){
+
+	.main{
+		display: flex;
+		flex-direction: column;
+		min-height: 450px;
+
+	}
+
+	.menu-hidden{
+		display:none ;
+	}
+	.menu-icon-hidden{
+		display:block;
+	}
+	.info{
+		width: 100%;
+		padding: 15px;
+		padding-bottom: 0;
+		display: block;
+	}
+
+	.header{
+		position: relative;
+	}
+	.header .menu-icon{
+		padding: 0;
+		position: absolute;
+		top: 2px;
+	}
+
+
+
+	.header h1{
+		font-size: 36px;
+		margin: 0px;
+		padding: 0px;
+	}
+
+	.header p{
+		margin: 0px;
+	}
+
+	.thumbnail{
+		margin-bottom: 0;
+		display: flex;
+		flex- direction: row;
+		align-items: center;
+	}
+
+	.thumbnail .image{
+		flex:1;
+		max-width: 150px;
+	}
+
+	.thumbnail .caption{
+		flex:2;
+		/*padding: 15px;*/2
+		margin: 0;
+		display: flex;
+		justify-content: center;
+		max-width: 300px;
+	}
+
+
+	.thumbnail .caption address,
+	.thumbnail .caption h2,
+	.thumbnail .caption p{
+		margin: 0px;
+		padding: 0px;
+	}
+
+	.thumbnail .caption address h2{
+		font-size: large;
+	}
+
+
+	.map{
+		flex:1;
+		height: 10%;
+	}
+
+}

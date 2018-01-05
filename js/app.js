@@ -1,1 +1,359 @@
-var vm=null,yelp=function(){var a=function(){return Math.floor(1e12*Math.random()).toString()},b="http://api.yelp.com/v2/search",c={oauth_consumer_key:"c3k72t_lDi5ni3GVAnY5DA",oauth_token:"dkQ5ow9kZ70xbg-94TpFPyGWeaBAssPU",oauth_nonce:a(),oauth_timestamp:Math.floor(Date.now()/1e3),oauth_signature_method:"HMAC-SHA1",oauth_version:"1.0",callback:"cb",location:"Canal Street New York",term:"noodle tea ",limit:10},d="1Ab9HjsAQau_X4x02wncMmD-67w",e="cB4aqsRzJh8nKZRwKyy6FIDT_UQ",f=oauthSignature.generate("GET",b,c,d,e);c.oauth_signature=f;var g=setTimeout(function(){alert("yelp data was not successful")},8e3),h={url:b,data:c,cache:!0,dataType:"jsonp",success:function(a){var b=a.businesses;vm=new viewModel(b),ko.applyBindings(vm),clearTimeout(g)}};this.init=function(){$.ajax(h)}};(new yelp).init();var Place=function(a){this.name=ko.observable(a.name);var b=a.location.address[0]?a.location.address[0]+" ":"",c=a.location.address[1]?a.location.address[1]+" ":"",d=a.image_url.replace("ms","ls"),e=function(a,b){return b.some(function(b){for(var c in a)if(a[c].indexOf(b)>=0)return a[c].indexOf(b)>=0})};this.isBar=ko.observable(e(a.categories,["tea"])),this.address=ko.observable(b+c+a.location.city),this.location=ko.observable(a.location),this.image=ko.observable(d),this.maker=null,this.infowindow=null,this.phone=ko.observable(a.display_phone)},storage=function(a){localStorage.searchStore||(localStorage.searchStore=ko.toJSON("")),localStorage.currentStore||(localStorage.currentStore=ko.toJSON("")),this.searchStore=function(a){return a?void(localStorage.searchStore=ko.toJSON(a)):JSON.parse(localStorage.searchStore)},this.currentStr=function(a){if(!a)return JSON.parse(localStorage.currentStore);var b={name:a.name(),address:a.address(),phone:a.phone(),image:a.image()};localStorage.currentStore=ko.toJSON(b)}},viewModel=function(a){var b=this,c=new storage(b);if(b.placeList=ko.observableArray([]),a.forEach(function(a){b.placeList.push(new Place(a))}),b.filter=ko.observable(c.searchStore()),b.currentPlace=ko.observable(c.currentStr()),b.filterPlaces=ko.computed(function(){c.searchStore(b.filter());var a=b.filter().toLowerCase();if(a){var d=ko.utils.arrayFilter(b.placeList(),function(b){return b.name().toLowerCase().indexOf(a)!==-1});return 0===d.length&&c.searchStore(""),d}return b.placeList()}),b.setCurrent=function(a){b.currentPlace(a),c.currentStr(b.currentPlace()),d.markerShowInfo(a)},b.markerInfo=function(){b.setCurrent(this),b.hideShowMenu()},"undefined"!=typeof google){var d=new googleMaps(b);d.initMap()}else alert("google map data was not successful");b.hideShowMenu=function(){$(".menu").toggleClass("menu-hidden"),$(".thumbnail-section").toggleClass("thumbnail-section-hidden")}},googleMaps=function(a){var b,c=this,d=a.placeList(),e=a.filterPlaces();c.initMap=function(){b=new google.maps.Map(document.getElementById("map-canvas"),{zoom:12}),b.set("styles",[{featureType:"road.highway",elementType:"geometry",stylers:[{saturation:-100},{lightness:80}]},{featureType:"road.arterial",elementType:"geometry",stylers:[{saturation:-100},{lightness:0}]},{featureType:"road.local",elementType:"labels",stylers:[{visibility:"on"}]},{featureType:"poi",elementType:"all",stylers:[{saturation:-100},{visibility:"off"}]},{featureType:"administrative",stylers:[{saturation:-100},{visibility:"off"}]},{featureType:"transit",stylers:[{saturation:-100},{visibility:"simplified"}]},{featureType:"water",elementType:"geometry",stylers:[{saturation:-100},{lightness:25},{visibility:"simplified"}]},{featureType:"road",stylers:[{saturation:-100},{lightness:-15},{visibility:"simplified"}]},{featureType:"landscape",stylers:[{saturation:-100},{lightness:70},{visibility:"simplified"}]}]);var e=new google.maps.Geocoder,f=new google.maps.LatLngBounds;c.geocodeAddress(e,f),google.maps.event.addDomListener(window,"resize",function(){var a=b.getCenter();google.maps.event.trigger(b,"resize"),b.setCenter(a)}),a.filterPlaces.subscribe(function(a){d.forEach(function(b){c.showMarker(b,c.checkShowMarker(b,a))})})},c.showMarker=function(a,c){c?a.marker.setMap(b):a.marker.setMap(null)},c.checkShowMarker=function(a,b){return jQuery.inArray(a,b)!==-1},c.geocodeAddress=function(a,f){d.forEach(function(d){a.geocode({address:d.address()},function(a,g){g===google.maps.GeocoderStatus.OK?(f.extend(a[0].geometry.location),c.createMarker(a[0],d,c.checkShowMarker(d,e))):alert("Geocode was not successful for the following reason: "+g),b.fitBounds(f)})})},c.createMarker=function(c,d,e){var f="./images/noun_154278_cc_1.png",g="./images/noun_82812_cc.png",h=d.isBar()?f:g,i=new google.maps.Marker({map:e?b:null,position:c.geometry.location,animation:google.maps.Animation.DROP,icon:h}),j="<div>"+d.name()+"</div",k=new google.maps.InfoWindow({content:j});d.marker=i,d.infowindow=k,i.addListener("click",function(){a.setCurrent(d)},i)},c.markerShowInfo=function(a){d.forEach(function(a){a.infowindow.close()}),a.infowindow.open(b,a.marker),a.marker.setAnimation(google.maps.Animation.DROP)}};
+var vm = null;
+var yelp = function(){
+	var YELP_TOKEN ="YlMcv9vPSHaFuf7Nhx_ehTogP9kgChamwjXtk5h-gDY63vZt-RvcU1AwgI2KB3b41N6psdR840cAxPPlTtB89iWELNVhJsLElP6XJVT4ymxMgnKiavFc6HQRITpOWnYx";
+	var yelp_url='http://api.yelp.com/v3/businesses/search';
+	var cors_anywhere_url = 'https://cors-anywhere.herokuapp.com/'; 
+
+	var parameters = {
+		location: 'Canal Street New York',
+		term: 'noodle tea ',
+		limit: 10
+	};
+
+	var yelpRequestTimeout = setTimeout(function(){
+		alert("yelp data was not successful");
+	},8000);
+
+	//https://stackoverflow.com/questions/45684805/extract-yelps-rating
+	var settings = {
+		"data": parameters,
+		"async": true,
+		"crossDomain": true,
+		"url": cors_anywhere_url + yelp_url ,
+		"method": "GET",
+		"headers": {
+			"authorization": "Bearer " + YELP_TOKEN,
+			"cache-control": "public, max-age=31536000",
+		},
+		success: function(results) {
+			console.log(results);
+			var initialPlaces =results.businesses;
+			vm = new viewModel(initialPlaces);
+			ko.applyBindings(vm);
+			clearTimeout(yelpRequestTimeout);
+		}
+	};
+
+	this.init = function(){
+		$.ajax(settings);
+	};
+};
+new yelp().init();
+
+
+
+var Place= function(data){
+	console.log(data);
+	this.name = ko.observable(data.name);
+	var address_1 = data.location.display_address[0] ? data.location.display_address[0]+" " : "";
+	var address_2 = data.location.display_address[1] ? data.location.display_address[1]+" " : "";
+	var imageUrl = data.image_url.replace("ms","ls");
+
+	/**
+		 * @description determine if an array contains one or more items from another array.
+		 * @param {array} haystack the array to search.
+		 * @param {array} arr the array providing items to check for in the haystack.
+		 * @return {boolean} true|false if haystack contains at least one item from arr.
+	 */
+	var findOne = function (haystack, arr) {
+		return arr.some(function (v) {
+			for (var hay in haystack){
+				console.log(haystack[hay]);
+				if ( haystack[hay].indexOf(v) >= 0){
+					return haystack[hay].indexOf(v) >= 0;
+				}
+			}
+		});
+	};
+
+	console.log(findOne(data.categories.title, ["bars"]));
+	this.isBar = ko.observable(findOne(data.categories.title, ["tea"]));
+	this.address = ko.observable(address_1 + address_2 + data.location.city);
+	this.location = ko.observable (data.location);
+	this.image= ko.observable(imageUrl);
+	this.maker =null;
+	this.infowindow =null;
+	this.phone = ko.observable(data.display_phone);
+};
+
+
+
+// stores current search and current select store
+var storage = function(vm){
+	if (!localStorage.searchStore) {
+		localStorage.searchStore = ko.toJSON("");
+	}
+	if (!localStorage.currentStore) {
+		localStorage.currentStore = ko.toJSON("");
+	}
+	this.searchStore = function(data){
+		if (!data){
+			return JSON.parse(localStorage.searchStore);
+		}
+		localStorage.searchStore = ko.toJSON(data);
+	};
+	this.currentStr = function(data){
+		if (!data){
+			return JSON.parse(localStorage.currentStore);
+		}
+
+		var tempCurrent ={
+			name : data.name(),
+			address : data.address(),
+			phone: data.phone(),
+			image : data.image()
+		};
+		//ko.toJson(data) gives error
+		localStorage.currentStore = ko.toJSON(tempCurrent);
+	};
+};
+
+
+
+var viewModel = function(initialPlaces){
+	var self = this;
+	var vmStorage = new storage(self);
+
+	self.placeList = ko.observableArray([]);
+
+
+	initialPlaces.forEach(function(item){
+		self.placeList.push(new Place(item));
+	});
+
+	self.filter = ko.observable(vmStorage.searchStore());
+
+
+	self.currentPlace = ko.observable(vmStorage.currentStr());
+
+
+	self.filterPlaces = ko.computed(function(){
+		//http://www.knockmeout.net/2011/04/utility-functions-in-knockoutjs.html
+		vmStorage.searchStore(self.filter());
+		var filter= self.filter().toLowerCase();
+		if(!filter){
+			return self.placeList();
+
+		}
+		else{
+			var filterList = ko.utils.arrayFilter(self.placeList(), function(item) {
+						return item.name().toLowerCase().indexOf(filter) !== -1;
+			});
+			if (filterList.length === 0){
+				vmStorage.searchStore("");
+			}
+			return filterList;
+		}
+	});
+
+
+	self.setCurrent =function(data){
+		self.currentPlace(data);
+		vmStorage.currentStr(self.currentPlace());
+		goo.markerShowInfo(data);
+	};
+
+
+	self.markerInfo = function(){
+		self.setCurrent (this);
+		self.hideShowMenu();
+
+	};
+
+	//Google Map error handling
+	if (typeof google !== 'undefined'){
+		var goo = new googleMaps(self);
+		goo.initMap();
+	}
+	else{
+		alert("google map data was not successful");
+	}
+
+	self.hideShowMenu = function(){
+		$(".menu").toggleClass("menu-hidden");
+		$(".thumbnail-section").toggleClass("thumbnail-section-hidden");
+	};
+
+};
+
+
+//Drink by Creative Stall from the Noun Project
+//Noodles by Lemon Liu from the Noun Project
+//Sandwich by Alex Chocron from the Noun Project
+//Teapot by Lilit Kalachyan from the Noun Project
+
+
+
+var googleMaps = function(data){
+	var self = this;
+	var gMap;
+	var placeList = data.placeList();
+	var filterPlaces = data.filterPlaces();
+
+	self.initMap =function(){
+		gMap = new google.maps.Map(document.getElementById('map-canvas'), {
+			zoom: 12,
+		});
+
+
+		gMap.set('styles',[
+			{
+				featureType: "road.highway",
+				elementType: "geometry",
+				stylers: [
+					{saturation: -100 },
+					{lightness: 80 },
+					//{gamma: 2 }
+				]
+			},{
+				featureType: "road.arterial",
+				elementType: "geometry",
+				stylers: [
+					{saturation: -100 },
+					//{gamma: 1 },
+					{lightness: 0 }
+				]
+			},{
+			featureType: "road.local",
+				elementType: "labels",
+				stylers: [
+					{visibility: 'on' }
+				]
+			},{
+				featureType: "poi",
+				elementType: "all",
+				stylers: [
+					{saturation: -100 },
+					{visibility: 'off' },
+					//{lightness: 54 }
+
+				]
+			},{
+				featureType: "administrative",
+				stylers: [
+					{saturation: -100 },
+					{visibility: 'off' }
+				]
+			},{
+				featureType: "transit",
+				stylers: [
+					{saturation: -100 },
+					{ visibility: 'simplified' }
+				]
+			},{
+				featureType: "water",
+				elementType: "geometry",
+				stylers: [
+					{saturation: -100 },
+					{lightness: 25 },
+					{ visibility: 'simplified' }
+				]
+			},{
+				featureType: "road",
+				stylers: [
+					{saturation: -100 },
+					{lightness: -15 },
+					{ visibility: 'simplified' }
+				]
+			},{
+				featureType: "landscape",
+				stylers: [
+					{saturation: -100 },
+					{lightness: 70 },
+					{ visibility: 'simplified' }
+				]
+			}
+		]);
+
+
+		var geocoder = new google.maps.Geocoder();
+		var latlngbounds = new google.maps.LatLngBounds();
+		self.geocodeAddress(geocoder, latlngbounds);
+
+		google.maps.event.addDomListener(window, 'resize', function() {
+			console.log("resize");
+			var center = gMap.getCenter();
+			google.maps.event.trigger(gMap, "resize");
+			gMap.setCenter(center);
+		});
+		data.filterPlaces.subscribe(function (newValue) {
+			placeList.forEach(function(item){
+				self.showMarker(item,self.checkShowMarker(item, newValue));
+			});
+		});
+	}; // end self.initMap
+
+
+	self.showMarker= function(item, val){
+		if (val){
+			item.marker.setMap(gMap);
+		}
+		else{
+			item.marker.setMap(null);
+		}
+	};
+
+
+	self.checkShowMarker = function(place, placeArray){
+		return (jQuery.inArray(place,placeArray)!== -1) ? true: false;
+	};
+
+
+	self.geocodeAddress= function (geocoder, llbound ) {
+		placeList.forEach(function(item){
+			geocoder.geocode({'address': item.address()}, function(results, status) {
+				if (status === google.maps.GeocoderStatus.OK) {
+					llbound.extend(results[0].geometry.location);
+					self.createMarker(results[0],item, self.checkShowMarker(item, filterPlaces) );
+				}
+				else {
+					alert('Geocode was not successful for the following reason: ' + status);
+				}
+				gMap.fitBounds(llbound);
+			});
+
+		});
+	};// end self.geocodeAddress
+
+
+	self.createMarker= function (place,item,show){
+		console.log(item.isBar());
+		var sizeX, sizeY =50;
+		var imgDrink ='./images/noun_154278_cc_1.png';
+		var imgFood ='./images/noun_82812_cc.png';
+		var icon = item.isBar() ? imgDrink: imgFood;
+
+		var marker = new google.maps.Marker({
+			map: show ? gMap :null,
+			position: place.geometry.location,
+			animation: google.maps.Animation.DROP,
+			icon: icon
+
+		});
+
+		var contentString = '<div>'+ item.name()+'</div';
+		var infowindow = new google.maps.InfoWindow({content: contentString});
+
+		item.marker = marker;
+		item.infowindow = infowindow;
+
+		marker.addListener('click',function(){
+			data.setCurrent(item);
+		},marker);
+
+	};//end self.createMarker
+
+
+	self.markerShowInfo =function (item){
+			placeList.forEach(function(item){
+				item.infowindow.close();
+			});
+
+			item.infowindow.open(gMap,item.marker);
+			item.marker.setAnimation(google.maps.Animation.DROP);
+	}; //end self.markerShowInfo
+
+};// end var googleMaps
+
+
+
