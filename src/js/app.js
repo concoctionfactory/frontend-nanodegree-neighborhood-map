@@ -1,41 +1,32 @@
 var vm = null;
 var yelp = function(){
-	//https://discussions.udacity.com/t/im-having-trouble-getting-started-using-apis/13597/2
-	var nonce_generate = function() {
-		return (Math.floor(Math.random() * 1e12).toString());
-	};
+	var YELP_TOKEN ="YlMcv9vPSHaFuf7Nhx_ehTogP9kgChamwjXtk5h-gDY63vZt-RvcU1AwgI2KB3b41N6psdR840cAxPPlTtB89iWELNVhJsLElP6XJVT4ymxMgnKiavFc6HQRITpOWnYx";
+	var yelp_url='http://api.yelp.com/v3/businesses/search';
+	var cors_anywhere_url = 'https://cors-anywhere.herokuapp.com/'; 
 
-	var yelp_url='http://api.yelp.com/v2/search';
 	var parameters = {
-		oauth_consumer_key: "c3k72t_lDi5ni3GVAnY5DA",
-		oauth_token: "dkQ5ow9kZ70xbg-94TpFPyGWeaBAssPU",
-		oauth_nonce: nonce_generate(),
-		oauth_timestamp: Math.floor(Date.now()/1000),
-		oauth_signature_method: 'HMAC-SHA1',
-		oauth_version : '1.0',
-		callback: 'cb',              // This is crucial to include for jsonp implementation in AJAX or else the oauth-signature will be wrong.
 		location: 'Canal Street New York',
 		term: 'noodle tea ',
 		limit: 10
 	};
 
-	var YELP_KEY_SECRET = "1Ab9HjsAQau_X4x02wncMmD-67w";
-	var YELP_TOKEN_SECRET="cB4aqsRzJh8nKZRwKyy6FIDT_UQ";
-	var encodedSignature = oauthSignature.generate('GET',yelp_url, parameters, YELP_KEY_SECRET, YELP_TOKEN_SECRET);
-
-	parameters.oauth_signature = encodedSignature;
-
 	var yelpRequestTimeout = setTimeout(function(){
 		alert("yelp data was not successful");
 	},8000);
 
+	//https://stackoverflow.com/questions/45684805/extract-yelps-rating
 	var settings = {
-		url: yelp_url,
-		data: parameters,
-		cache: true,                // This is crucial to include as well to prevent jQuery from adding on a cache-buster parameter "_=23489489749837", invalidating our oauth-signature
-		dataType: 'jsonp',
-
+		"data": parameters,
+		"async": true,
+		"crossDomain": true,
+		"url": cors_anywhere_url + yelp_url ,
+		"method": "GET",
+		"headers": {
+			"authorization": "Bearer " + YELP_TOKEN,
+			"cache-control": "public, max-age=31536000",
+		},
 		success: function(results) {
+			console.log(results);
 			var initialPlaces =results.businesses;
 			vm = new viewModel(initialPlaces);
 			ko.applyBindings(vm);
@@ -46,36 +37,37 @@ var yelp = function(){
 	this.init = function(){
 		$.ajax(settings);
 	};
-
 };
 new yelp().init();
+
 
 
 var Place= function(data){
 	console.log(data);
 	this.name = ko.observable(data.name);
-	var address_1 = data.location.address[0] ? data.location.address[0]+" " : "";
-	var address_2 = data.location.address[1] ? data.location.address[1]+" " : "";
+	var address_1 = data.location.display_address[0] ? data.location.display_address[0]+" " : "";
+	var address_2 = data.location.display_address[1] ? data.location.display_address[1]+" " : "";
 	var imageUrl = data.image_url.replace("ms","ls");
-	/**
- * @description determine if an array contains one or more items from another array.
- * @param {array} haystack the array to search.
- * @param {array} arr the array providing items to check for in the haystack.
- * @return {boolean} true|false if haystack contains at least one item from arr.
- */
-var findOne = function (haystack, arr) {
-	return arr.some(function (v) {
-		 for (var hay in haystack){
-			console.log(haystack[hay]);
-			if ( haystack[hay].indexOf(v) >= 0){
-				return haystack[hay].indexOf(v) >= 0;
-			}
-		}
-	});
-};
 
-	console.log(findOne(data.categories, ["bars"]));
-	this.isBar = ko.observable(findOne(data.categories, ["tea"]));
+	/**
+		 * @description determine if an array contains one or more items from another array.
+		 * @param {array} haystack the array to search.
+		 * @param {array} arr the array providing items to check for in the haystack.
+		 * @return {boolean} true|false if haystack contains at least one item from arr.
+	 */
+	var findOne = function (haystack, arr) {
+		return arr.some(function (v) {
+			for (var hay in haystack){
+				console.log(haystack[hay]);
+				if ( haystack[hay].indexOf(v) >= 0){
+					return haystack[hay].indexOf(v) >= 0;
+				}
+			}
+		});
+	};
+
+	console.log(findOne(data.categories.title, ["bars"]));
+	this.isBar = ko.observable(findOne(data.categories.title, ["tea"]));
 	this.address = ko.observable(address_1 + address_2 + data.location.city);
 	this.location = ko.observable (data.location);
 	this.image= ko.observable(imageUrl);
@@ -83,6 +75,7 @@ var findOne = function (haystack, arr) {
 	this.infowindow =null;
 	this.phone = ko.observable(data.display_phone);
 };
+
 
 
 // stores current search and current select store
@@ -115,17 +108,24 @@ var storage = function(vm){
 	};
 };
 
+
+
 var viewModel = function(initialPlaces){
 	var self = this;
 	var vmStorage = new storage(self);
 
 	self.placeList = ko.observableArray([]);
+
+
 	initialPlaces.forEach(function(item){
 		self.placeList.push(new Place(item));
 	});
 
 	self.filter = ko.observable(vmStorage.searchStore());
+
+
 	self.currentPlace = ko.observable(vmStorage.currentStr());
+
 
 	self.filterPlaces = ko.computed(function(){
 		//http://www.knockmeout.net/2011/04/utility-functions-in-knockoutjs.html
@@ -145,11 +145,14 @@ var viewModel = function(initialPlaces){
 			return filterList;
 		}
 	});
+
+
 	self.setCurrent =function(data){
 		self.currentPlace(data);
 		vmStorage.currentStr(self.currentPlace());
 		goo.markerShowInfo(data);
 	};
+
 
 	self.markerInfo = function(){
 		self.setCurrent (this);
@@ -278,7 +281,6 @@ var googleMaps = function(data){
 				self.showMarker(item,self.checkShowMarker(item, newValue));
 			});
 		});
-	//placeList.notifySubscribers();
 	}; // end self.initMap
 
 
@@ -290,6 +292,7 @@ var googleMaps = function(data){
 			item.marker.setMap(null);
 		}
 	};
+
 
 	self.checkShowMarker = function(place, placeArray){
 		return (jQuery.inArray(place,placeArray)!== -1) ? true: false;
@@ -316,12 +319,6 @@ var googleMaps = function(data){
 	self.createMarker= function (place,item,show){
 		console.log(item.isBar());
 		var sizeX, sizeY =50;
-/*		var icon ={
-			url:'../images/noun_54275_cc.svg',
-			size: new google.maps.Size(sizeX,sizeY),
-			origin: new google.maps.Point(0,0),
-			anchor: new google.maps.Point(sizeX/2, sizeY/2)
-		};*/
 		var imgDrink ='./images/noun_154278_cc_1.png';
 		var imgFood ='./images/noun_82812_cc.png';
 		var icon = item.isBar() ? imgDrink: imgFood;

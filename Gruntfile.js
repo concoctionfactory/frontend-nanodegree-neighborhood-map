@@ -60,7 +60,7 @@ module.exports = function(grunt) {
 			expand:true,
 			cwd:'src/css',
 			src:'**',
-			dest:'dest/css'
+			dest:'dist/css'
 		}
 	},
 
